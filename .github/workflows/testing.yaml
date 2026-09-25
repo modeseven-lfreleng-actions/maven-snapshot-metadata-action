@@ -59,7 +59,7 @@ jobs:
           echo "Testing setup step/summary output" >> "$GITHUB_STEP_SUMMARY"
 
       - name: "Running local action: ${{ github.repository }}"
-        uses: $/
+        uses: $/.
         with:
           input: "test input 💬"
 
@@ -74,11 +74,13 @@ jobs:
 
       # yamllint disable-line rule:line-length
       - name: "Running local action: ${{ github.repository }} [Override Failure]"
-        uses: $/
+        uses: $/.
         id: failure
         continue-on-error: true
+        # An empty value: actionlint now validates inputs on '$/.',
+        # so an undefined one would fail the lint rather than the step.
         with:
-          invalid_input: "Some garbage"
+          input: ""
 
       # Failure testing is also important
       - name: "Error if step above did NOT fail"
